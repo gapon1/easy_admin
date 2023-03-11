@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\EasyAdmin\VotesField;
 use App\Entity\Question;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -29,7 +30,7 @@ class QuestionCrudController extends AbstractCrudController
                 $pageName !== Crud::PAGE_NEW
             );
         yield Field::new('name');
-        yield Field::new('votes', 'Total Votes')
+        yield VotesField::new('votes', 'Total Votes')
             ->setTextAlign('right');
         yield Field::new('createdAt')
             ->hideOnForm();
