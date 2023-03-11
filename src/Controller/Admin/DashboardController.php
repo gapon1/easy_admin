@@ -29,6 +29,14 @@ class DashboardController extends AbstractDashboardController
         return $this->render('admin/index.html.twig');
     }
 
+    public function configureCrud(): Crud
+    {
+        return parent::configureCrud()
+            ->setDefaultSort([
+                'id' => 'DESC',
+            ]);
+    }
+
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()

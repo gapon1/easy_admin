@@ -1,1 +1,6 @@
 :root { --sidebar-bg: #deebff; }
+.markdown-preview {
+    margin-top: 10px;
+    border: 2px dashed #da3735;
+    padding: 5px;
+}
