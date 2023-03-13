@@ -5,6 +5,16 @@
                 "enabled": true,
                 "fetch": "eager"
             }
+        },
+        "@symfony/ux-dropzone": {
+            "dropzone": {
+                "upload_dir": "uploads/avatars",
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "@symfony/ux-dropzone/src/style.css": true
+                }
+            }
         }
     },
     "entrypoints": []

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Answer;
+use App\Entity\Attachment;
 use App\Entity\Question;
 use App\Entity\Topic;
 use App\Entity\User;
@@ -88,6 +89,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Pending Approval', 'far fa-question-circle', Question::class)
             ->setPermission('ROLE_MODERATOR')
             ->setController(QuestionPendingApprovalCrudController::class);
+        yield MenuItem::linkToCrud('Attachment', 'fas fa-image', Attachment::class);
         yield MenuItem::linkToCrud('Answers', 'fas fa-comments', Answer::class);
         yield MenuItem::linkToCrud('Topics', 'fas fa-folder', Topic::class);
         yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);

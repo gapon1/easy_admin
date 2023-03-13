@@ -57,6 +57,8 @@ class QuestionCrudController extends AbstractCrudController
             ->autocomplete()
             ->setPermission( 'ROLE_SUPER_ADMIN')
             ->setFormTypeOption('by_reference', false);
+        yield AssociationField::new('attachments')
+            ->autocomplete();
 
         yield TextareaField::new('question')
             ->hideOnIndex()
