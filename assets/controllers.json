@@ -8,7 +8,8 @@
         },
         "@symfony/ux-dropzone": {
             "dropzone": {
-                "upload_dir": "uploads/avatars",
+                "upload_dir": "uploads/dropzone",
+                "upload_filename": "test66",
                 "enabled": true,
                 "fetch": "eager",
                 "autoimport": {

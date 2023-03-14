@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row align-content-center">
+            <form action="{{ action.linkUrl }}" method="POST" enctype="multipart/form-data" class="dropzone">
+                {{ form_widget(form, { label: false }) }}
+                <button type="submit" class="btn btn-primary">Upload it!</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6eedfb67d3d97534c1625940f8fc59f",
+    "content-hash": "772ce6414a10e277e3ee10e0895d9bbc",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1514,16 +1514,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.6.0",
+            "version": "v4.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "90b3ccd9565b986d9d39ed8ca7f390063a760321"
+                "reference": "340548d93c2f6a732a71a528668fdf155d4a2f25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/90b3ccd9565b986d9d39ed8ca7f390063a760321",
-                "reference": "90b3ccd9565b986d9d39ed8ca7f390063a760321",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/340548d93c2f6a732a71a528668fdf155d4a2f25",
+                "reference": "340548d93c2f6a732a71a528668fdf155d4a2f25",
                 "shasum": ""
             },
             "require": {
@@ -1595,7 +1595,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.6.0"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.6.1"
             },
             "funding": [
                 {
@@ -1603,7 +1603,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-20T19:01:40+00:00"
+            "time": "2023-03-12T10:16:10+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",

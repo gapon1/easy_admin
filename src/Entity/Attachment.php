@@ -34,10 +34,6 @@ class Attachment
         return $this->id;
     }
 
-    public function __toString()
-    {
-        return $this->attachment;
-    }
 
 
     public function getImage(): ?string
