@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -42,6 +43,7 @@ class QuestionCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        yield FormField::addTab('Basic Data');
         yield IdField::new('id')
             ->onlyOnIndex();
         yield Field::new('slug')
@@ -49,11 +51,13 @@ class QuestionCrudController extends AbstractCrudController
             ->setFormTypeOption(
                 'disabled',
                 $pageName !== Crud::PAGE_NEW
-            );
+            )->setColumns(5);
         yield Field::new('name')
-        ->setSortable(false);
+            ->setSortable(false)
+            ->setColumns(5);
         yield VotesField::new('votes', 'Total Votes')
             ->setTextAlign('right');
+        yield FormField::addTab('Details', 'info');
         yield Field::new('createdAt')
             ->hideOnForm();
         yield AssociationField::new('topic');
@@ -73,8 +77,6 @@ class QuestionCrudController extends AbstractCrudController
             ->autocomplete()
             ->setPermission( 'ROLE_SUPER_ADMIN')
             ->setFormTypeOption('by_reference', false);
-        yield AssociationField::new('attachments')
-            ->autocomplete();
 
         yield TextareaField::new('question')
             ->hideOnIndex()
@@ -151,7 +153,14 @@ class QuestionCrudController extends AbstractCrudController
             ->add(Crud::PAGE_DETAIL, $viewAction)
             ->add(Crud::PAGE_INDEX, $viewAction)
             ->add(Crud::PAGE_DETAIL, $approveAction)
-            ->add(Crud::PAGE_INDEX, $exportAction);
+            ->add(Crud::PAGE_INDEX, $exportAction)
+            ->reorder(Crud::PAGE_DETAIL, [
+                'approve',
+                'view',
+                Action::EDIT,
+                Action::INDEX,
+                Action::DELETE,
+            ]);
 
 
     }
