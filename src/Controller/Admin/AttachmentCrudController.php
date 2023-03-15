@@ -18,8 +18,10 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\UX\Dropzone\Form\DropzoneType;
 
 
@@ -36,7 +38,7 @@ class AttachmentCrudController extends AbstractCrudController
             ->addCssClass('btn btn-success')
             ->setIcon('fa fa-check-circle')
             ->displayAsButton()
-            ->setTemplatePath('admin/image_upload_bitton.html.twig')
+            ->setTemplatePath('admin/approve_action.html.twig')
             ->linkToCrudAction('dropzone');
 
         return parent::configureActions($actions)
@@ -49,13 +51,12 @@ class AttachmentCrudController extends AbstractCrudController
     {
         yield IdField::new('id')
             ->onlyOnIndex();
-        yield ImageField::new('image')
-            ->setBasePath('uploads/avatars')
-            ->setUploadDir('public/uploads/avatars')
+        yield ImageField::new('imageFile')
+            ->setBasePath('uploads/dropzone')
+            ->setUploadDir('public/uploads/dropzone')
             ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]');
-        //yield DropZoneField::new('imageFile');
-        yield TextField::new('attachment');
         yield AssociationField::new('question');
+        yield TextField::new('attachment');
     }
 
     public function dropzone(AdminContext $adminContext, Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager, AdminUrlGenerator $adminUrlGenerator): Response
@@ -64,9 +65,24 @@ class AttachmentCrudController extends AbstractCrudController
 
         $form = $this->createFormBuilder()
             ->add('imageFile', DropzoneType::class, [
+                'label' => 'files',
+                'multiple' => true,
+                'constraints' => [
+                    new Count(['max' => 5]),
+                    new All([
+                        new File([
+                            'maxSize' => '2048k',
+                            'mimeTypes' => [
+                                'image/jpeg',
+                                'image/png'
+                            ],
+                        ])
+                    ])
+                ],
                 'attr' => [
                     'data-controller' => 'mydropzone',
-                    'placeholder' => 'Drag and drop a file or click to browse',
+                    'placeholder' => 'Drag and drop or browse',
+                    'accept' => '.jpg, .jpeg, .png'
                 ],
             ])
             ->getForm();
@@ -76,27 +92,27 @@ class AttachmentCrudController extends AbstractCrudController
             $brochureFile = $form->get('imageFile')->getData();
             // this condition is needed because the 'brochure' field is not required
             if ($brochureFile) {
-                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
 
-                // Move the file to the directory where brochures are stored
-                try {
-                    $brochureFile->move(
-                        $this->getParameter('dropzone_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                foreach ($brochureFile as $item) {
+                    $originalFilename = pathinfo($item->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $item->guessExtension();
+
+                    // Move the file to the directory where brochures are stored
+                    try {
+                        $item->move(
+                            $this->getParameter('dropzone_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
+                    $attachment->setImageFile($newFilename);
+                    $attachment->setImage('testppp');
+                    $attachment->setAttachment('lolll');
+                    $entityManager->flush();
                 }
-
-                dd($attachment);
-                $attachment->setImageFile($newFilename);
-                $attachment->setImage('testppp');
-                $attachment->setAttachment('lolll');
-                $entityManager->flush();
-
             }
 
             $targetUrl = $adminUrlGenerator
