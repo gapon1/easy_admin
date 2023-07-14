@@ -93,7 +93,7 @@ class DashboardController extends AbstractDashboardController
                     ->setPermission('ROLE_MODERATOR')
                     ->setController(QuestionPendingApprovalCrudController::class),
             ]);
-        yield MenuItem::linkToCrud('Attachment', 'fas fa-image', Attachment::class);
+        //yield MenuItem::linkToCrud('Attachment', 'fas fa-image', Attachment::class);
         yield MenuItem::linkToCrud('Answers', 'fas fa-comments', Answer::class);
         yield MenuItem::linkToCrud('Topics', 'fas fa-folder', Topic::class);
         yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);

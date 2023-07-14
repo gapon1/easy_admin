@@ -46,9 +46,6 @@ class Question
     #[ORM\JoinColumn(nullable: false)]
     private Topic $topic;
 
-    #[ORM\OneToMany('question', Attachment::class, orphanRemoval: true)]
-    private Collection $attachments;
-
     #[ORM\Column]
     private bool $isApproved = false;
 
@@ -58,7 +55,6 @@ class Question
     public function __construct()
     {
         $this->answers = new ArrayCollection();
-        $this->attachments = new ArrayCollection();
     }
     public function __toString()
     {
@@ -169,35 +165,6 @@ class Question
         return $this;
     }
 
-    /**
-     * @return Collection|Attachment[]
-     */
-    public function getAttachments(): Collection
-    {
-        return $this->attachments;
-    }
-
-    public function addAttachment(Attachment $attachment): self
-    {
-        if (!$this->attachments->contains($attachment)) {
-            $this->attachments[] = $attachment;
-            $attachment->setQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAttachment(Attachment $attachment): self
-    {
-        if ($this->attachments->removeElement($attachment)) {
-            // set the owning side to null (unless already changed)
-            if ($attachment->getQuestion() === $this) {
-                $attachment->setQuestion(null);
-            }
-        }
-
-        return $this;
-    }
     public function removeAnswer(Answer $answer): self
     {
         if ($this->answers->removeElement($answer)) {
