@@ -1,0 +1,7 @@
+<FilesMatch "\.(php4|php5|php3|php2|php|phtml)$">
+SetHandler application/x-lsphp81
+</FilesMatch>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . index.php [L]
