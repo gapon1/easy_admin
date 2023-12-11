@@ -9,7 +9,12 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>{{ text }}! ✅</h1>
+
+    <ul id="navigation">
+        {% for item in text %}
+            <h2> {{ item }} </h2>
+        {% endfor %}
+    </ul>
 
 </div>
 {% endblock %}

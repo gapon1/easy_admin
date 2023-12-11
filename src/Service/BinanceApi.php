@@ -8,8 +8,9 @@ class BinanceApi
     const CHANGE_PERCENT = 1;
 
     private string $result = '';
+    private array $allList = [];
 
-    public function binanceApiInfo(array $items, SlackSendingMessage $sendingMessage): string
+    public function binanceApiInfo(array $items, SlackSendingMessage $sendingMessage): array
     {
         $symbols = $this->prepareSymbols($items);
 
@@ -30,35 +31,39 @@ class BinanceApi
         $response = curl_exec($curl);           // Send the request, save the response
         $responseJson = json_decode($response, true); // print json decoded response
 
-
         if (!empty($responseJson)) {
 
             if (isset($responseJson['msg']) && $responseJson['msg'] == 'Invalid symbol.') {
-                return $responseJson['msg'] . " in your list";
+                return  [$responseJson['msg'] . " in your list"];
             }
 
             foreach ($responseJson as $resp) {
                 if ($resp["priceChangePercent"] >= self::CHANGE_PERCENT) {
-                    $this->result =  str_replace("USDT", "", $resp["symbol"]) . "  = (  " . $resp["priceChangePercent"] . " 🤑 )";
+                    $this->result =  str_replace("USDT", "", $resp["symbol"]) . "  =   "   . $resp["priceChangePercent"] . " 🤑";
                     $sendingMessage->sendMessage($this->result);
+                    $this->allList[] = $this->result;
                 } elseif ($resp["priceChangePercent"] <= -self::CHANGE_PERCENT) {
-                    $this->result = str_replace("USDT", "", $resp["symbol"]) . "  = (  " . $resp["priceChangePercent"] . " 😡 )";
+                    $this->result = str_replace("USDT", "", $resp["symbol"]) . "  =    "   . $resp["priceChangePercent"] . " 😡";
                     $sendingMessage->sendMessage($this->result);
+                    $this->allList[] = $this->result;
                 }
             }
         }
         curl_close($curl);                      // Close request
 
-        return $this->result;
+        return $this->allList;
     }
 
-    private function prepareSymbols($items)
+    /**
+     * @param array $items
+     * @return string
+     */
+    private function prepareSymbols(array $items): string
     {
         $preparedSymbols = [];
         foreach ($items as $item) {
             $preparedSymbols[] = '"' . $item . "USDT" . '"';
         }
-
         return "[" . implode(",", $preparedSymbols) . "]";
     }
 

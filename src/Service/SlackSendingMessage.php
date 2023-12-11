@@ -14,7 +14,7 @@ class SlackSendingMessage
         $this->slackToken = $slackToken;
     }
 
-    public function sendMessage($params): string
+    public function sendMessage(string $params): string
     {
         $client = ClientFactory::create($this->slackToken);
         $chat = $client->chatPostMessage(

@@ -16,11 +16,9 @@ class BotController extends AbstractController
     {
         $items = $itemRepository->findAllItems();
         $binance = $binanceApi->binanceApiInfo($items, $sendingMessage);
-        var_dump($binance);
-        die();
 
         return $this->render('bot/index.html.twig', [
-            'text' => 'text',
+            'text' => $binance,
         ]);
     }
 }
