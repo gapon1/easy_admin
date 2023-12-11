@@ -11,8 +11,10 @@
         "doctrine/orm": "^2.7",
         "easycorp/easyadmin-bundle": "^4.6",
         "handcraftedinthealps/goodby-csv": "^1.4",
+        "jolicode/slack-php-api": "^4.6",
         "knplabs/knp-markdown-bundle": "dev-symfony6",
         "knplabs/knp-time-bundle": "^1.11",
+        "nyholm/psr7": "^1.8",
         "sensio/framework-extra-bundle": "^6.0",
         "stof/doctrine-extensions-bundle": "^1.4",
         "symfony/asset": "6.0.*",
@@ -21,6 +23,7 @@
         "symfony/flex": "^2.0.0",
         "symfony/form": "6.2.*",
         "symfony/framework-bundle": "6.0.*",
+        "symfony/http-client": "6.2.*",
         "symfony/mime": "6.2.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/runtime": "6.0.*",
@@ -57,7 +60,8 @@
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "symfony/flex": true,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "php-http/discovery": true
         }
     },
     "autoload": {
