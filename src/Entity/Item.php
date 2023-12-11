@@ -23,9 +23,6 @@ class Item
     #[ORM\Column]
     private ?bool $is_active = null;
 
-    #[ORM\Column]
-    private ?int $currency_ = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $details = null;
 
@@ -73,18 +70,6 @@ class Item
         return $this;
     }
 
-    public function getCurrency(): ?int
-    {
-        return $this->currency_;
-    }
-
-    public function setCurrency(int $currency_): static
-    {
-        $this->currency_ = $currency_;
-
-        return $this;
-    }
-
     public function getDetails(): ?string
     {
         return $this->details;
@@ -107,5 +92,18 @@ class Item
         $this->image = $image;
 
         return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        if (strpos($this->image, '/') !== false) {
+            return $this->image;
+        }
+
+        return sprintf('/uploads/items/%s', $this->image);
     }
 }

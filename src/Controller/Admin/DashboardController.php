@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Answer;
 use App\Entity\Attachment;
+use App\Entity\Item;
 use App\Entity\Question;
 use App\Entity\Topic;
 use App\Entity\User;
@@ -96,10 +97,13 @@ class DashboardController extends AbstractDashboardController
         //yield MenuItem::linkToCrud('Attachment', 'fas fa-image', Attachment::class);
         yield MenuItem::linkToCrud('Answers', 'fas fa-comments', Answer::class);
         yield MenuItem::linkToCrud('Topics', 'fas fa-folder', Topic::class);
+        yield MenuItem::linkToCrud('Coins', 'fas fa-coins', Item::class);
         yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
         yield MenuItem::section();
         yield MenuItem::linkToUrl('Homepage', 'fas fa-home', $this->generateUrl('app_homepage'));
-        yield MenuItem::linkToUrl('StackOverflow', 'fab fa-stack-overflow', 'https://stackoverflow.com')
+        yield MenuItem::linkToUrl('Bot Page', 'fas fa-robot', $this->generateUrl('app_bot'))
+            ->setLinkTarget('_blank');
+        yield MenuItem::linkToUrl('CryptoBubbles', 'fas fa-chart-pie', 'https://cryptobubbles.net/')
             ->setLinkTarget('_blank');
     }
 
