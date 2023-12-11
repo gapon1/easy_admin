@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use JoliCode\Slack\ClientFactory;
+use App\Repository\ItemRepository;
+use App\Service\BinanceApi;
+use App\Service\SlackSendingMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,20 +12,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class BotController extends AbstractController
 {
     #[Route('/bot', name: 'app_bot')]
-    public function index(): Response
+    public function index(ItemRepository $itemRepository, SlackSendingMessage $sendingMessage, BinanceApi $binanceApi): Response
     {
-        $slackToken = $this->getParameter('slack_token');
-        $client = ClientFactory::create($slackToken);
-        $chat = $client->chatPostMessage(
-            [
-                'channel' => '#bot',
-                'text' => 'Hello Chalio' . rand(10, 200)
-            ]);
-
-        $text = $chat->getMessage()->getText();
+        $items = $itemRepository->findAllItems();
+        $binance = $binanceApi->binanceApiInfo($items, $sendingMessage);
+        var_dump($binance);
+        die();
 
         return $this->render('bot/index.html.twig', [
-            'text' => $text,
+            'text' => 'text',
         ]);
     }
 }
