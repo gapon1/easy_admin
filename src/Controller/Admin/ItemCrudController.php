@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Twig\Profiler\Dumper\HtmlDumper;
 
 class ItemCrudController extends AbstractCrudController
 {
@@ -43,7 +44,11 @@ class ItemCrudController extends AbstractCrudController
                 ->setBasePath('uploads/items')
                 ->setUploadDir('public/uploads/items')
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]')
-                ->onlyOnForms()
+                ->onlyOnForms(),
+            TextField::new('code')
+                ->setTemplatePath('bot/chart.html.twig')
+                ->setLabel(false)
+                ->onlyOnDetail()
         ];
     }
 }

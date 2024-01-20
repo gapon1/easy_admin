@@ -84,17 +84,17 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-dashboard');
         yield MenuItem::section('Content');
-        yield MenuItem::subMenu('Questions', 'fa fa-question-circle')
-            ->setSubItems([
-                MenuItem::linkToCrud('All', 'fa fa-list', Question::class)
-                    ->setController(QuestionCrudController::class)
-                    ->setPermission('ROLE_MODERATOR'),
-                MenuItem::linkToCrud('Pending Approval', 'fa fa-warning', Question::class)
-                    ->setPermission('ROLE_MODERATOR')
-                    ->setController(QuestionPendingApprovalCrudController::class),
-            ]);
-        yield MenuItem::linkToCrud('Answers', 'fas fa-comments', Answer::class);
-        yield MenuItem::linkToCrud('Topics', 'fas fa-folder', Topic::class);
+//        yield MenuItem::subMenu('Questions', 'fa fa-question-circle')
+//            ->setSubItems([
+//                MenuItem::linkToCrud('All', 'fa fa-list', Question::class)
+//                    ->setController(QuestionCrudController::class)
+//                    ->setPermission('ROLE_MODERATOR'),
+//                MenuItem::linkToCrud('Pending Approval', 'fa fa-warning', Question::class)
+//                    ->setPermission('ROLE_MODERATOR')
+//                    ->setController(QuestionPendingApprovalCrudController::class),
+//            ]);
+//        yield MenuItem::linkToCrud('Answers', 'fas fa-comments', Answer::class);
+//        yield MenuItem::linkToCrud('Topics', 'fas fa-folder', Topic::class);
         yield MenuItem::linkToCrud('Coins', 'fas fa-coins', Item::class);
         yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
         yield MenuItem::section();
