@@ -19,7 +19,7 @@ class SlackSendingMessage
         $client = ClientFactory::create($this->slackToken);
         $chat = $client->chatPostMessage(
             [
-                'channel' => '#bot',
+                'channel' => '#build-bot',
                 'text' => $params
             ]);
 
