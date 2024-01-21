@@ -5,7 +5,7 @@ namespace App\Service;
 class BinanceApi
 {
     const CANDLE_TIME = '15m';
-    const CHANGE_PERCENT = 0.2;
+    const CHANGE_PERCENT = 1;
 
     private string $result = '';
     private array $allList = [];
