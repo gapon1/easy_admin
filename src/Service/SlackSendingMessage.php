@@ -8,10 +8,12 @@ class SlackSendingMessage
 {
 
     protected $slackToken;
+    protected $slackChannel;
 
-    public function __construct($slackToken)
+    public function __construct($slackToken, $slackChannel)
     {
         $this->slackToken = $slackToken;
+        $this->slackChannel = $slackChannel;
     }
 
     public function sendMessage(string $params): string
@@ -19,7 +21,7 @@ class SlackSendingMessage
         $client = ClientFactory::create($this->slackToken);
         $chat = $client->chatPostMessage(
             [
-                'channel' => '#build-bot',
+                'channel' => '#'.$this->slackChannel,
                 'text' => $params
             ]);
 

@@ -6,6 +6,7 @@
 parameters:
   dropzone_directory: 'uploads/dropzone'
   app.slack_param: '%env(SLACK_TOKEN)%'
+  app.slack_param_channel: '%env(SLACK_CHANNEL)%'
 
 services:
     # default configuration for services in *this* file
@@ -30,6 +31,7 @@ services:
     App\Service\SlackSendingMessage:
         arguments:
           $slackToken: '%app.slack_param%'
+          $slackChannel: '%app.slack_param_channel%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
