@@ -12,7 +12,6 @@
         "easycorp/easyadmin-bundle": "^4.6",
         "handcraftedinthealps/goodby-csv": "^1.4",
         "jolicode/slack-php-api": "^4.6",
-        "knplabs/knp-markdown-bundle": "dev-symfony6",
         "knplabs/knp-time-bundle": "^1.11",
         "nyholm/psr7": "^1.8",
         "sensio/framework-extra-bundle": "^6.0",
@@ -35,8 +34,7 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "6.0.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0",
-        "ext-curl": "*"
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
@@ -46,12 +44,6 @@
         "symfony/web-profiler-bundle": "6.0.*",
         "zenstruck/foundry": "^1.1"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:bocharsky-bw/KnpMarkdownBundle.git"
-        }
-    ],
     "config": {
         "preferred-install": {
             "*": "dist"
