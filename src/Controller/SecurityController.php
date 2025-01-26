@@ -30,4 +30,29 @@ class SecurityController extends AbstractController
     {
         throw new LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    #[Route('/deploy', name: 'app_deploy')]
+    public function deploy()
+    {
+
+        $secret = 'crypto_deploy'; // Replace with your GitHub webhook secret
+
+    // Verify the request signature
+        $signature = 'sha256=' . hash_hmac('sha256', file_get_contents('php://input'), $secret);
+
+        $signatureHeader = $_SERVER['HTTP_X_HUB_SIGNATURE_256'] ?? null;
+        if ($signatureHeader === null) {
+            http_response_code(400);
+            echo 'Missing HTTP_X_HUB_SIGNATURE_256 header';
+            exit;
+        }
+
+    // Execute Git pull
+        $output = [];
+        exec('cd /home/u538818725/domains/growupcrypto.site/public_html && git pull 2>&1', $output);
+        echo implode("\n", $output);
+
+
+        //return new Response($message);
+    }
 }
