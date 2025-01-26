@@ -37,17 +37,14 @@ class SecurityController extends AbstractController
 
         $secret = 'crypto_deploy'; // Replace with your GitHub webhook secret
 
-    // Verify the request signature
+        // Verify the request signature
         $signature = 'sha256=' . hash_hmac('sha256', file_get_contents('php://input'), $secret);
-
-        $signatureHeader = $_SERVER['HTTP_X_HUB_SIGNATURE_256'] ?? null;
-        if ($signatureHeader === null) {
-            http_response_code(400);
-            echo 'Missing HTTP_X_HUB_SIGNATURE_256 header';
-            exit;
+        if (!hash_equals($signature, $_SERVER['HTTP_X_HUB_SIGNATURE_256'])) {
+            http_response_code(403);
+            exit('Invalid signature');
         }
 
-    // Execute Git pull
+        // Execute Git pull
         $output = [];
         exec('cd /home/u538818725/domains/growupcrypto.site/public_html && git pull 2>&1', $output);
         echo implode("\n", $output);
