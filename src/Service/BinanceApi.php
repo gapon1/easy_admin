@@ -49,9 +49,6 @@ class BinanceApi
                     $this->result = str_replace("USDT", "", $resp["symbol"]) . "  =    " . $resp["priceChangePercent"] . " 😡";
                     $sendingMessage->sendMessage($this->result);
                     $this->allList[] = $this->result;
-                }else{
-                    $this->allList[] = "There are NO changes greater than 1";
-                    break;
                 }
             }
         }else{
