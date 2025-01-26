@@ -1,4 +1,10 @@
-DirectoryIndex index.php
-<FilesMatch "\.(php4|php5|php3|php2|php|phtml)$">
-SetHandler application/x-lsphp81
-</FilesMatch>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /public/$1 [L]
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^growupcrypto.site$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.growupcrypto.site$
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]
