@@ -35,6 +35,7 @@ class SecurityController extends AbstractController
     #[Route('/deploy', name: 'app_deploy')]
     public function deploy(Request $request): Response
     {
+        // Test deployment
         $headers = getallheaders();
         file_put_contents(dirname(__DIR__, 2).'/var/log/headers.log', print_r($headers, true));
 
