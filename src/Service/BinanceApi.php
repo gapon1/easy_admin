@@ -14,6 +14,8 @@ class BinanceApi
     {
         $symbols = $this->prepareSymbols($items);
 
+        //dd($symbols);
+
         $apiUrl = 'https://api.binance.com/api/v3/ticker';
         $parameters = [
             'symbols' => $symbols,
@@ -34,19 +36,26 @@ class BinanceApi
         if (!empty($responseJson)) {
 
             if (isset($responseJson['msg']) && $responseJson['msg'] == 'Invalid symbol.') {
-                return  [$responseJson['msg'] . " in your list"];
+                return [$responseJson['msg'] . " in your list"];
             }
 
+            if (!isset($responseJson['msg'])) {
             foreach ($responseJson as $resp) {
                 if ($resp["priceChangePercent"] >= self::CHANGE_PERCENT) {
-                    $this->result =  str_replace("USDT", "", $resp["symbol"]) . "  =   "   . $resp["priceChangePercent"] . " 🤑";
+                    $this->result = str_replace("USDT", "", $resp["symbol"]) . "  =   " . $resp["priceChangePercent"] . " 🤑";
                     $sendingMessage->sendMessage($this->result);
                     $this->allList[] = $this->result;
                 } elseif ($resp["priceChangePercent"] <= -self::CHANGE_PERCENT) {
-                    $this->result = str_replace("USDT", "", $resp["symbol"]) . "  =    "   . $resp["priceChangePercent"] . " 😡";
+                    $this->result = str_replace("USDT", "", $resp["symbol"]) . "  =    " . $resp["priceChangePercent"] . " 😡";
                     $sendingMessage->sendMessage($this->result);
                     $this->allList[] = $this->result;
+                }else{
+                    $this->allList[] = "There are NO changes greater than 1";
+                    break;
                 }
+            }
+        }else{
+                $this->allList[] = $responseJson['msg'];
             }
         }
         curl_close($curl);                      // Close request
