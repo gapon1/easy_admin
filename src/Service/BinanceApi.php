@@ -6,6 +6,7 @@ class BinanceApi
 {
     const CANDLE_TIME = '15m';
     const CHANGE_PERCENT = 1;
+    const BOT_STATUS = 1;
 
     private string $result = '';
     private array $allList = [];
@@ -33,7 +34,7 @@ class BinanceApi
         $response = curl_exec($curl);           // Send the request, save the response
         $responseJson = json_decode($response, true); // print json decoded response
 
-        if (!empty($responseJson)) {
+        if (empty($responseJson)) {
 
             if (isset($responseJson['msg']) && $responseJson['msg'] == 'Invalid symbol.') {
                 return [$responseJson['msg'] . " in your list"];
