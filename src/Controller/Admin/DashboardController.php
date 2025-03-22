@@ -102,6 +102,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToUrl('Homepage', 'fas fa-home', $this->generateUrl('app_homepage'));
         yield MenuItem::linkToUrl('Bot Page', 'fas fa-robot', $this->generateUrl('app_bot'))
             ->setLinkTarget('_blank');
+        yield MenuItem::linkToUrl('Bot Hour Page', 'fas fa-hourglass-start', $this->generateUrl('app_bot_hour'))
+            ->setLinkTarget('_blank');
         yield MenuItem::linkToUrl('CryptoBubbles', 'fas fa-chart-pie', 'https://cryptobubbles.net/')
             ->setLinkTarget('_blank');
     }

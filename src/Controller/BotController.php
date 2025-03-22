@@ -21,4 +21,15 @@ class BotController extends AbstractController
             'text' => $binance,
         ]);
     }
+
+    #[Route('/bot-hour', name: 'app_bot_hour')]
+    public function hour(ItemRepository $itemRepository, SlackSendingMessage $sendingMessage, BinanceApi $binanceApi): Response
+    {
+        $items = $itemRepository->findAllItems();
+        $binance = $binanceApi->binanceFuturesInfo($items, $sendingMessage);
+
+        return $this->render('bot/index.html.twig', [
+            'text' => $binance,
+        ]);
+    }
 }
