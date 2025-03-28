@@ -42,10 +42,10 @@ class BinanceApi
             if (!isset($responseJson['msg'])) {
                 foreach ($responseJson as $resp) {
                     if ($resp["priceChangePercent"] >= self::CHANGE_PERCENT) {
-                        $this->result = str_replace("USDT", "", $resp["symbol"]) . " " . $resp["priceChangePercent"] . " 🟢". "\n";
+                        $this->result = str_replace("USDT", "", $resp["symbol"]) . " " . $resp["priceChangePercent"] . " 🤑". "\n";
                         $this->allList[] = $this->result;
                     } elseif ($resp["priceChangePercent"] <= -self::CHANGE_PERCENT) {
-                        $this->result = str_replace("USDT", "", $resp["symbol"]) . " " . $resp["priceChangePercent"] . " 🔴". "\n";
+                        $this->result = str_replace("USDT", "", $resp["symbol"]) . " " . $resp["priceChangePercent"] . " 😡". "\n";
                         $this->allList[] = $this->result;
                     }
                 }
@@ -156,11 +156,11 @@ class BinanceApi
 
 //             Output result
             if (!empty($lastGreenCandles)) {
-                $this->allHourList[] = "🟢 " . $item . "\n";
+                $this->allHourList[] = "🤑 " . $item . "\n";
             }
             // Output result for red candles
             if (!empty($lastRedCandles)) {
-                $this->allHourList[] = "🔴 " . $item . "\n";
+                $this->allHourList[] = "😡 " . $item . "\n";
             }
         }
         if (!empty($this->allHourList)) {
