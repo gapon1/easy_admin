@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\ItemRepository;
+use App\Service\BinanceApi;
+use App\Service\SlackSendingMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,10 +12,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class BotController extends AbstractController
 {
     #[Route('/bot', name: 'app_bot')]
-    public function index(): Response
+    public function index(ItemRepository $itemRepository, SlackSendingMessage $sendingMessage, BinanceApi $binanceApi): Response
     {
+        $items = $itemRepository->findAllItems();
+        $binance = $binanceApi->binanceApiInfo($items, $sendingMessage);
+
         return $this->render('bot/index.html.twig', [
-            'controller_name' => 'BotController',
+            'text' => $binance,
+        ]);
+    }
+
+    #[Route('/bot-hour', name: 'app_bot_hour')]
+    public function hour(ItemRepository $itemRepository, SlackSendingMessage $sendingMessage, BinanceApi $binanceApi): Response
+    {
+        $items = $itemRepository->findAllItems();
+        $binance = $binanceApi->binanceFuturesInfo($items, $sendingMessage);
+
+        return $this->render('bot/index.html.twig', [
+            'text' => $binance,
         ]);
     }
 }

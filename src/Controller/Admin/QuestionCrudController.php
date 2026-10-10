@@ -22,6 +22,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Exception;
+use LogicException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -182,7 +184,7 @@ class QuestionCrudController extends AbstractCrudController
     {
         $user = $this->getUser();
         if (!$user instanceof User) {
-            throw new \LogicException('Currently logged in user is not an instance of User?!');
+            throw new LogicException('Currently logged in user is not an instance of User?!');
         }
         $entityInstance->setUpdatedBy($user);
         parent::updateEntity($entityManager, $entityInstance);
@@ -191,7 +193,7 @@ class QuestionCrudController extends AbstractCrudController
     public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         if ($entityInstance->getIsApproved()) {
-            throw new \Exception('Deleting approved questions is forbidden!');
+            throw new Exception('Deleting approved questions is forbidden!');
         }
         parent::deleteEntity($entityManager, $entityInstance);
     }
@@ -200,7 +202,7 @@ class QuestionCrudController extends AbstractCrudController
     {
         $question = $adminContext->getEntity()->getInstance();
         if (!$question instanceof Question) {
-            throw new \LogicException('Entity is missing or not a Question');
+            throw new LogicException('Entity is missing or not a Question');
         }
         $question->setIsApproved(true);
         $entityManager->flush();

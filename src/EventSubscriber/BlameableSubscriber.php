@@ -5,6 +5,7 @@ namespace App\EventSubscriber;
 use App\Entity\Question;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
+use LogicException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Security;
 
@@ -26,7 +27,7 @@ class BlameableSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         // We always should have a User object in EA
         if (!$user instanceof User) {
-            throw new \LogicException('Currently logged in user is not an instance of User?!');
+            throw new LogicException('Currently logged in user is not an instance of User?!');
         }
 
         $question->setUpdatedBy($user);

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use DateTimeInterface;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use Goodby\CSV\Export\Standard\Exporter;
@@ -20,7 +21,7 @@ class CsvExporter
         $data = [];
         foreach ($result as $index => $row) {
             foreach ($row as $columnKey => $columnValue) {
-                $data[$index][$columnKey] = $columnValue instanceof \DateTimeInterface
+                $data[$index][$columnKey] = $columnValue instanceof DateTimeInterface
                     ? $columnValue->format('Y-m-d H:i:s')
                     : $columnValue;
             }

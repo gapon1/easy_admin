@@ -6,7 +6,7 @@ for the EasyAdminBundle tutorial on SymfonyCasts.
 ## Setup
 
 If you've just downloaded the code, congratulations!!
-
+Some text
 To get it working, follow these steps:
 
 **Download Composer dependencies**

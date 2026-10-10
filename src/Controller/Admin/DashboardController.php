@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Answer;
-use App\Entity\Attachment;
+use App\Entity\Item;
 use App\Entity\Question;
 use App\Entity\Topic;
 use App\Entity\User;
@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,7 +71,7 @@ class DashboardController extends AbstractDashboardController
     public function configureUserMenu(UserInterface $user): UserMenu
     {
         if (!$user instanceof User) {
-            throw new \Exception('Wrong user');
+            throw new Exception('Wrong user');
         }
 
         return parent::configureUserMenu($user)
@@ -84,22 +85,26 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-dashboard');
         yield MenuItem::section('Content');
-        yield MenuItem::subMenu('Questions', 'fa fa-question-circle')
-            ->setSubItems([
-                MenuItem::linkToCrud('All', 'fa fa-list', Question::class)
-                    ->setController(QuestionCrudController::class)
-                    ->setPermission('ROLE_MODERATOR'),
-                MenuItem::linkToCrud('Pending Approval', 'fa fa-warning', Question::class)
-                    ->setPermission('ROLE_MODERATOR')
-                    ->setController(QuestionPendingApprovalCrudController::class),
-            ]);
-        //yield MenuItem::linkToCrud('Attachment', 'fas fa-image', Attachment::class);
-        yield MenuItem::linkToCrud('Answers', 'fas fa-comments', Answer::class);
-        yield MenuItem::linkToCrud('Topics', 'fas fa-folder', Topic::class);
+//        yield MenuItem::subMenu('Questions', 'fa fa-question-circle')
+//            ->setSubItems([
+//                MenuItem::linkToCrud('All', 'fa fa-list', Question::class)
+//                    ->setController(QuestionCrudController::class)
+//                    ->setPermission('ROLE_MODERATOR'),
+//                MenuItem::linkToCrud('Pending Approval', 'fa fa-warning', Question::class)
+//                    ->setPermission('ROLE_MODERATOR')
+//                    ->setController(QuestionPendingApprovalCrudController::class),
+//            ]);
+//        yield MenuItem::linkToCrud('Answers', 'fas fa-comments', Answer::class);
+//        yield MenuItem::linkToCrud('Topics', 'fas fa-folder', Topic::class);
+        yield MenuItem::linkToCrud('Coins', 'fas fa-coins', Item::class);
         yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
         yield MenuItem::section();
         yield MenuItem::linkToUrl('Homepage', 'fas fa-home', $this->generateUrl('app_homepage'));
-        yield MenuItem::linkToUrl('StackOverflow', 'fab fa-stack-overflow', 'https://stackoverflow.com')
+        yield MenuItem::linkToUrl('Bot Page', 'fas fa-robot', $this->generateUrl('app_bot'))
+            ->setLinkTarget('_blank');
+        yield MenuItem::linkToUrl('Bot Hour Page', 'fas fa-hourglass-start', $this->generateUrl('app_bot_hour'))
+            ->setLinkTarget('_blank');
+        yield MenuItem::linkToUrl('CryptoBubbles', 'fas fa-chart-pie', 'https://cryptobubbles.net/')
             ->setLinkTarget('_blank');
     }
 
